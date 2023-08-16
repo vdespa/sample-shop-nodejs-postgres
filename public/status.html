@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Store Test App</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<script>
+    async function loadStatus() {
+        const response = await fetch('/api/status');
+        const data = await response.json();
+
+        document.getElementById('appStatus').innerText = data.appStatus;
+        document.getElementById('dbConnection').innerText = data.dbConnection;
+        document.getElementById('dbExistence').innerText = data.dbExistence;
+
+        ['appStatus', 'dbConnection', 'dbExistence'].forEach(id => {
+            const element = document.getElementById(id);
+            if(element.innerText === 'UP') {
+                element.classList.add('text-green-500');
+            } else {
+                element.classList.add('text-red-500');
+            }
+        });
+    }
+
+    loadStatus();
+</script>
+<!-- ... (similar head section) ... -->
+<body class="bg-gray-100 p-8">
+    <h1 class="text-xl font-semibold mb-4">Status</h1>
+    <!-- ... -->
+    <p>App status: <span class="font-bold" id="appStatus">LOADING...</span></p>
+    <p>Database connection: <span class="font-bold" id="dbConnection">LOADING...</span></p>
+    <p>Existence of required database: <span class="font-bold" id="dbExistence">LOADING...</span></p>
+    <!-- ... -->
+</body>
+</html>
+
+</html>

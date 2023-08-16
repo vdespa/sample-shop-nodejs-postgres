@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Store Test App</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<script>
+    async function loadProducts() {
+        const response = await fetch('/api/products');
+        const products = await response.json();
+
+        const tbody = document.querySelector('tbody');
+        tbody.innerHTML = ''; // Clear existing rows
+        
+        products.forEach(product => {
+            const tr = document.createElement('tr');
+            tr.classList.add('bg-gray-200');
+
+            const columns = [
+                product.id,
+                product.productName,
+                `$${product.price}`,
+                product.category,
+                product.description
+            ];
+
+            columns.forEach(col => {
+                const td = document.createElement('td');
+                td.classList.add('px-16', 'py-2');
+                td.innerText = col;
+                tr.appendChild(td);
+            });
+
+            tbody.appendChild(tr);
+        });
+    }
+
+    loadProducts();
+</script>
+<!-- ... (similar head section) ... -->
+<body class="bg-gray-100 p-8">
+    <h1 class="text-xl font-semibold mb-4">Products</h1>
+    <table class="min-w-full table-auto">
+        <thead class="justify-between">
+            <tr class="bg-gray-800">
+                <th class="px-16 py-2">
+                    <span class="text-gray-300">Id</span>
+                </th>
+                <th class="px-16 py-2">
+                    <span class="text-gray-300">Product Name</span>
+                </th>
+                <th class="px-16 py-2">
+                    <span class="text-gray-300">Price</span>
+                </th>
+                <th class="px-16 py-2">
+                    <span class="text-gray-300">Category</span>
+                </th>
+                <th class="px-16 py-2">
+                    <span class="text-gray-300">Description</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- The products will be populated here by the JS function -->
+        </tbody>
+    </table>
+</body>
+</html>
+</html>
+
